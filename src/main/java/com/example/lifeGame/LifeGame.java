@@ -6,28 +6,47 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class LifeGame extends Application {
+import javax.net.ssl.SSLEngineResult;
+import java.util.HashMap;
+import java.util.Map;
 
+public class LifeGame extends Application {
+    public static MainView mainView;
     public static int START = 0;
-    static final int SIZE = 50;
+    static final int SIZE = 80;
+    static final int SCREEN_SIZE_X = 800;
+    static final int SCREEN_SIZE_Y = 820;
+
+    static Map<Coords,Byte> gameZone = new HashMap<>();
     @Override
     public void start(Stage stage) {
-
-        MainView mainView = new MainView();
-        GameLogic gl = new GameLogic(mainView);
-        gl.start();
 
         StackPane pane = new StackPane();
         pane.setAlignment(Pos.BOTTOM_CENTER);
         pane.getChildren().add(mainView);
-        Scene scene = new Scene(pane,800,820);
+        Scene scene = new Scene(pane,SCREEN_SIZE_X,SCREEN_SIZE_Y);
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
 
+        stage.setOnCloseRequest(windowEvent -> {
+            stage.close();
+            });
+
 
         //mainView.draw();
 
+    }
+
+    public static void main(String[] args) {
+
+        Controller c = new Controller();
+
+        mainView = new MainView(c);
+        GameLogic gl = new GameLogic(mainView);
+        gl.start();
+
+        launch();
     }
 
 }
