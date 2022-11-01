@@ -4,11 +4,16 @@ package com.example.lifeGame;
 import java.util.Objects;
 
 public class Coords {
-    private int x,y;
+    private final int x;
+    private final int y;
 
     public Coords(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static Coords add(Coords a, Coords b) {
+        return new Coords(a.getx()+b.getx(),a.gety()+b.gety());
     }
 
     public int getx() {
